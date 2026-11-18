@@ -1,5 +1,6 @@
 # muscle_spindle_model_2022
 Housley et al. 2024, Biophysical model of muscle spindle encoding
+https://physoc.onlinelibrary.wiley.com/doi/full/10.1113/EP091099 
 
 NEURON==7.7
 numpy==1.18.0
