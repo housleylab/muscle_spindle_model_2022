@@ -1,0 +1,62 @@
+//Makes sin wave and derivative to add to trapezoidal command
+// or use on its own
+
+SINSTART =290
+SINEND=1190
+STIMSTOP=1400
+SINFREQ=100
+SINAMP = 0.08  //default is 80 micron vibration as in Vincent et al. 2016
+
+objref sincmd,sincmd1,sincmd2,sincmd3,dsincmd
+
+sincmd=new Vector()
+sincmd1=new Vector()
+sincmd2=new Vector()
+dsincmd=new Vector()
+
+proc mksin(){ local sinstart,sinend,stimstop,sinfreq,sinamp
+
+     sinstart=$1
+     sinend=$2
+     stimstop=$3
+     sinfreq=$4
+     sinamp=$5
+
+sincmd.resize(sinstart/dt)
+sincmd.fill(0)
+sincmd1.resize((sinend-sinstart)/dt)
+sincmd1.sin(sinfreq,0,dt)
+sincmd1.mul(sinamp/2)		//sinamp is peak-to-peak amplitude
+sincmd2.resize((stimstop-sinend)/dt)
+sincmd2.fill(0)
+sincmd.append(sincmd1,sincmd2)
+dsincmd.deriv(sincmd,dt)
+}
+
+proc new_sine(){
+    mksin(SINSTART,SINEND,STIMSTOP,SINFREQ,SINAMP)
+    }
+
+
+//assumes mycmd is a trapezoidal command and mydL its derivative
+proc add_sine(){
+
+sincmd.resize(mycmd.size())
+mycmd.add(sincmd)
+mycmd.play(&rmL_MRCHas,dt)
+dsincmd.resize(mydL.size())
+mydL.add(dsincmd)
+mydL.play(&rmdL_MRCHas,dt)
+}
+
+proc sub_sine(){
+
+sincmd.resize(mycmd.size())
+mycmd.sub(sincmd)
+mycmd.play(&rmL_MRCHas,dt)
+dsincmd.resize(mydL.size())
+mydL.sub(dsincmd)
+mydL.play(&rmdL_MRCHas,dt)
+}
+
+   

@@ -1,0 +1,286 @@
+{load_file("nrngui.hoc")}
+objectvar save_window_, rvp_
+objectvar scene_vector_[8]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+{pwman_place(0,0,0)}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,1400,-8,2)
+scene_vector_[2] = save_window_
+{save_window_.view(0, -8, 1400, 10, 91, 881, 433.92, 280.96)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addvar("rmL_MRCHas", 1, 1, 0.8, 0.9, 2)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,1400,0,1)
+scene_vector_[3] = save_window_
+{save_window_.view(0, 0, 1400, 1, 87, 481, 434.88, 331.84)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addexpr("term.srL_MRCHas( 0.5 )", 1, 1, 0.8, 0.9, 2)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,1400,-80,40)
+scene_vector_[4] = save_window_
+{save_window_.view(0, -80, 1400, 120, 545, 98, 406.08, 356.8)}
+graphList[0].append(save_window_)
+save_window_.save_name("graphList[0].")
+save_window_.addexpr("v(.5)", 1, 1, 0.8, 0.9, 2)
+save_window_.addexpr("term.v(0.1)", 2, 1, 0.8, 0.9, 2)
+}
+{
+xpanel("term(0 - 1) (Parameters)", 0)
+xlabel("term(0 - 1) (Parameters)")
+xlabel("nseg = 5")
+term.L = 100
+xvalue("L","term.L", 1,"", 0, 0 )
+term.Ra = 100
+xvalue("Ra","term.Ra", 1,"term.Ra += 0", 0, 1 )
+term.g_pas = 0.0001
+xvalue("g_pas","term.g_pas", 1,"", 0, 0 )
+term.e_pas = -80
+xvalue("e_pas","term.e_pas", 1,"", 0, 0 )
+term.cm = 1
+xvalue("cm","term.cm", 1,"", 0, 0 )
+term.diam = 3
+xvalue("diam","term.diam", 1,"", 0, 0 )
+term.a_MRCHas = 0.003
+xvalue("a_MRCHas","term.a_MRCHas", 1,"", 0, 0 )
+term.b_MRCHas = 21
+xvalue("b_MRCHas","term.b_MRCHas", 1,"", 0, 0 )
+term.c_MRCHas = -8
+xvalue("c_MRCHas","term.c_MRCHas", 1,"", 0, 0 )
+term.gbar_MRCHas = 0.002
+xvalue("gbar_MRCHas","term.gbar_MRCHas", 1,"", 0, 0 )
+term.taum_MRCHas = 1
+xvalue("taum_MRCHas","term.taum_MRCHas", 1,"", 0, 0 )
+term.gbar_naxs = 200
+xvalue("gbar_naxs","term.gbar_naxs", 1,"", 0, 0 )
+term.vShift_inact_local_naxs = 0
+xvalue("vShift_inact_local_naxs","term.vShift_inact_local_naxs", 1,"", 0, 0 )
+term.gbar_nav17 = 200
+xvalue("gbar_nav17","term.gbar_nav17", 1,"", 0, 0 )
+term.gbar_nav1p8 = 0.002
+xvalue("gbar_nav1p8","term.gbar_nav1p8", 1,"", 0, 0 )
+term.ena_nav1p8 = 79.6
+xvalue("ena_nav1p8","term.ena_nav1p8", 1,"", 0, 0 )
+term.gbar_nas = 200
+xvalue("gbar_nas","term.gbar_nas", 1,"", 0, 0 )
+term.vShift_inact_local_nas = 0
+xvalue("vShift_inact_local_nas","term.vShift_inact_local_nas", 1,"", 0, 0 )
+term.ena = 50
+xvalue("ena","term.ena", 1,"", 0, 0 )
+term.gbar_km = 0.004
+xvalue("gbar_km","term.gbar_km", 1,"", 0, 0 )
+term.gbar_Kv3 = 0.008
+xvalue("gbar_Kv3","term.gbar_Kv3", 1,"", 0, 0 )
+term.gbar_kv1_gp = 0.008
+xvalue("gbar_kv1_gp","term.gbar_kv1_gp", 1,"", 0, 0 )
+term.gkcamax_mAHP = 0.0005
+xvalue("gkcamax_mAHP","term.gkcamax_mAHP", 1,"", 0, 0 )
+term.gcamax_mAHP = 5e-05
+xvalue("gcamax_mAHP","term.gcamax_mAHP", 1,"", 0, 0 )
+term.depth_mAHP = 5
+xvalue("depth_mAHP","term.depth_mAHP", 1,"", 0, 0 )
+term.taur_mAHP = 80
+xvalue("taur_mAHP","term.taur_mAHP", 1,"", 0, 0 )
+term.ek = -90
+xvalue("ek","term.ek", 1,"", 0, 0 )
+term.eca = 132.46
+xvalue("eca","term.eca", 1,"", 0, 0 )
+xpanel(977,62)
+}
+{
+xpanel("preterm(0 - 1) (Parameters)", 0)
+xlabel("preterm(0 - 1) (Parameters)")
+xlabel("nseg = 1")
+preterm.L = 20
+xvalue("L","preterm.L", 1,"", 0, 0 )
+preterm.Ra = 100
+xvalue("Ra","preterm.Ra", 1,"preterm.Ra += 0", 0, 1 )
+preterm.diam = 1
+xvalue("diam","preterm.diam", 1,"", 0, 0 )
+preterm.cm = 1
+xvalue("cm","preterm.cm", 1,"", 0, 0 )
+preterm.g_pas = 0.0002
+xvalue("g_pas","preterm.g_pas", 1,"", 0, 0 )
+preterm.e_pas = -80
+xvalue("e_pas","preterm.e_pas", 1,"", 0, 0 )
+preterm.gbar_naxs = 200
+xvalue("gbar_naxs","preterm.gbar_naxs", 1,"", 0, 0 )
+preterm.vShift_inact_local_naxs = 0
+xvalue("vShift_inact_local_naxs","preterm.vShift_inact_local_naxs", 1,"", 0, 0 )
+preterm.gbar_nav17 = 200
+xvalue("gbar_nav17","preterm.gbar_nav17", 1,"", 0, 0 )
+preterm.gbar_nas = 200
+xvalue("gbar_nas","preterm.gbar_nas", 1,"", 0, 0 )
+preterm.vShift_inact_local_nas = 0
+xvalue("vShift_inact_local_nas","preterm.vShift_inact_local_nas", 1,"", 0, 0 )
+preterm.ena = 50
+xvalue("ena","preterm.ena", 1,"", 0, 0 )
+preterm.gbar_km = 0.004
+xvalue("gbar_km","preterm.gbar_km", 1,"", 0, 0 )
+preterm.gbar_kv1_gp = 0.008
+xvalue("gbar_kv1_gp","preterm.gbar_kv1_gp", 1,"", 0, 0 )
+preterm.gkcamax_mAHP = 0.0005
+xvalue("gkcamax_mAHP","preterm.gkcamax_mAHP", 1,"", 0, 0 )
+preterm.gcamax_mAHP = 5e-05
+xvalue("gcamax_mAHP","preterm.gcamax_mAHP", 1,"", 0, 0 )
+preterm.depth_mAHP = 5
+xvalue("depth_mAHP","preterm.depth_mAHP", 1,"", 0, 0 )
+preterm.taur_mAHP = 80
+xvalue("taur_mAHP","preterm.taur_mAHP", 1,"", 0, 0 )
+preterm.ek = -90
+xvalue("ek","preterm.ek", 1,"", 0, 0 )
+preterm.eca = 132.46
+xvalue("eca","preterm.eca", 1,"", 0, 0 )
+xpanel(1345,76)
+}
+{
+xpanel("naxs (Globals)", 0)
+a1_0_naxs = 62.648
+xvalue("a1_0_naxs","a1_0_naxs", 1,"", 0, 0 )
+a1_1_naxs = 0.011605
+xvalue("a1_1_naxs","a1_1_naxs", 1,"", 0, 0 )
+b1_0_naxs = 0.0019369
+xvalue("b1_0_naxs","b1_0_naxs", 1,"", 0, 0 )
+b1_1_naxs = 0.13772
+xvalue("b1_1_naxs","b1_1_naxs", 1,"", 0, 0 )
+a2_0_naxs = 34.783
+xvalue("a2_0_naxs","a2_0_naxs", 1,"", 0, 0 )
+a2_1_naxs = 0.029956
+xvalue("a2_1_naxs","a2_1_naxs", 1,"", 0, 0 )
+b2_0_naxs = 0.095752
+xvalue("b2_0_naxs","b2_0_naxs", 1,"", 0, 0 )
+b2_1_naxs = 0.092811
+xvalue("b2_1_naxs","b2_1_naxs", 1,"", 0, 0 )
+a3_0_naxs = 76.698
+xvalue("a3_0_naxs","a3_0_naxs", 1,"", 0, 0 )
+a3_1_naxs = 0.053743
+xvalue("a3_1_naxs","a3_1_naxs", 1,"", 0, 0 )
+b3_0_naxs = 1.2488
+xvalue("b3_0_naxs","b3_0_naxs", 1,"", 0, 0 )
+b3_1_naxs = 0.03115
+xvalue("b3_1_naxs","b3_1_naxs", 1,"", 0, 0 )
+bh_0_naxs = 3.5737
+xvalue("bh_0_naxs","bh_0_naxs", 1,"", 0, 0 )
+bh_1_naxs = 0.19332
+xvalue("bh_1_naxs","bh_1_naxs", 1,"", 0, 0 )
+bh_2_naxs = 0.074965
+xvalue("bh_2_naxs","bh_2_naxs", 1,"", 0, 0 )
+ah_0_naxs = 6.8827
+xvalue("ah_0_naxs","ah_0_naxs", 1,"", 0, 0 )
+ah_1_naxs = 4654
+xvalue("ah_1_naxs","ah_1_naxs", 1,"", 0, 0 )
+ah_2_naxs = 0.029583
+xvalue("ah_2_naxs","ah_2_naxs", 1,"", 0, 0 )
+aS1_naxs = 0.001
+xvalue("aS1_naxs","aS1_naxs", 1,"", 0, 0 )
+bS1_naxs = 0.0001
+xvalue("bS1_naxs","bS1_naxs", 1,"", 0, 0 )
+aS2_naxs = 0.001
+xvalue("aS2_naxs","aS2_naxs", 1,"", 0, 0 )
+bS2_naxs = 0.0001
+xvalue("bS2_naxs","bS2_naxs", 1,"", 0, 0 )
+vShift_naxs = 12
+xvalue("vShift_naxs","vShift_naxs", 1,"", 0, 0 )
+vShift_inact_naxs = 10
+xvalue("vShift_inact_naxs","vShift_inact_naxs", 1,"", 0, 0 )
+maxrate_naxs = 8000
+xvalue("maxrate_naxs","maxrate_naxs", 1,"", 0, 0 )
+temp_naxs = 23
+xvalue("temp_naxs","temp_naxs", 1,"", 0, 0 )
+q10_naxs = 2.3
+xvalue("q10_naxs","q10_naxs", 1,"", 0, 0 )
+q10h_naxs = 2.3
+xvalue("q10h_naxs","q10h_naxs", 1,"", 0, 0 )
+xpanel(1349,736)
+}
+{
+xpanel("nas (Globals)", 0)
+a1_0_nas = 45.85
+xvalue("a1_0_nas","a1_0_nas", 1,"", 0, 0 )
+a1_1_nas = 0.023935
+xvalue("a1_1_nas","a1_1_nas", 1,"", 0, 0 )
+b1_0_nas = 0.01441
+xvalue("b1_0_nas","b1_0_nas", 1,"", 0, 0 )
+b1_1_nas = 0.088476
+xvalue("b1_1_nas","b1_1_nas", 1,"", 0, 0 )
+a2_0_nas = 19.808
+xvalue("a2_0_nas","a2_0_nas", 1,"", 0, 0 )
+a2_1_nas = 0.022177
+xvalue("a2_1_nas","a2_1_nas", 1,"", 0, 0 )
+b2_0_nas = 0.56502
+xvalue("b2_0_nas","b2_0_nas", 1,"", 0, 0 )
+b2_1_nas = 0.061084
+xvalue("b2_1_nas","b2_1_nas", 1,"", 0, 0 )
+a3_0_nas = 71.812
+xvalue("a3_0_nas","a3_0_nas", 1,"", 0, 0 )
+a3_1_nas = 0.065938
+xvalue("a3_1_nas","a3_1_nas", 1,"", 0, 0 )
+b3_0_nas = 0.75312
+xvalue("b3_0_nas","b3_0_nas", 1,"", 0, 0 )
+b3_1_nas = 0.03648
+xvalue("b3_1_nas","b3_1_nas", 1,"", 0, 0 )
+bh_0_nas = 2.8302
+xvalue("bh_0_nas","bh_0_nas", 1,"", 0, 0 )
+bh_1_nas = 0.28901
+xvalue("bh_1_nas","bh_1_nas", 1,"", 0, 0 )
+bh_2_nas = 0.069603
+xvalue("bh_2_nas","bh_2_nas", 1,"", 0, 0 )
+ah_0_nas = 0.57578
+xvalue("ah_0_nas","ah_0_nas", 1,"", 0, 0 )
+ah_1_nas = 162.84
+xvalue("ah_1_nas","ah_1_nas", 1,"", 0, 0 )
+ah_2_nas = 0.026801
+xvalue("ah_2_nas","ah_2_nas", 1,"", 0, 0 )
+aS1_nas = 0.001
+xvalue("aS1_nas","aS1_nas", 1,"", 0, 0 )
+bS1_nas = 0.0001
+xvalue("bS1_nas","bS1_nas", 1,"", 0, 0 )
+aS2_nas = 0.001
+xvalue("aS2_nas","aS2_nas", 1,"", 0, 0 )
+bS2_nas = 0.0001
+xvalue("bS2_nas","bS2_nas", 1,"", 0, 0 )
+vShift_nas = 12
+xvalue("vShift_nas","vShift_nas", 1,"", 0, 0 )
+vShift_inact_nas = 10
+xvalue("vShift_inact_nas","vShift_inact_nas", 1,"", 0, 0 )
+maxrate_nas = 8000
+xvalue("maxrate_nas","maxrate_nas", 1,"", 0, 0 )
+temp_nas = 23
+xvalue("temp_nas","temp_nas", 1,"", 0, 0 )
+q10_nas = 2.3
+xvalue("q10_nas","q10_nas", 1,"", 0, 0 )
+q10h_nas = 2.3
+xvalue("q10h_nas","q10h_nas", 1,"", 0, 0 )
+xpanel(990,954)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,1400,0,0.5)
+scene_vector_[5] = save_window_
+{save_window_.view(0, 0, 1400, 0.5, 547, 527, 406.08, 283.84)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addexpr("term.ist_nas( 0.5 )", 1, 1, 0.627476, 0.967093, 2)
+save_window_.addexpr("term.ist_naxs( 0.5 )", 2, 1, 0.611502, 0.967093, 2)
+save_window_.addexpr("term.m_km(0.5)", 3, 1, 0.630189, 0.935629, 2)
+save_window_.addexpr("term.n_mAHP(0.5)", 4, 1, 0.623113, 0.921378, 2)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,1400,0,0.5)
+scene_vector_[6] = save_window_
+{save_window_.view(0, 0, 1400, 0.5, 549, 876, 406.08, 287.68)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addexpr("term.m_kv1_gp", 3, 1, 0.703324, 0.922845, 2)
+save_window_.addexpr("term.n_Kv3", 2, 1, 0.708019, 1.03969, 2)
+}
+objectvar scene_vector_[1]
+{doNotify()}

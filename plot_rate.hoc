@@ -1,0 +1,24 @@
+objref apc,spiketimes,spikeout,gfi,spikefreq
+apc=new APCount(0.5)
+spiketimes=new Vector()
+spikeout=new File()
+strdef filename
+
+gfi=new Graph()
+gfi.size(0,tstop/1000,0,300)
+
+proc plotrate(){
+apc.record()
+apc.record(spiketimes)
+run()
+nspks=spiketimes.size()
+spiketimes.div(1000)    //convert times to seconds
+spikefreq=new Vector(nspks-1)
+spikeout.wopen($s1)
+for i=0, spikefreq.size-1 {
+    	 spikefreq.x[i]=1/(spiketimes.x[i+1]-spiketimes.x[i])
+	 spikeout.printf("%10.3f\t%10.3f\n", spiketimes.x[i], spikefreq.x[i])
+}
+spikefreq.plot(gfi,spiketimes)
+spikeout.close()
+}

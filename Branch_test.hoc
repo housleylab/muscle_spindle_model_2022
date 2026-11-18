@@ -1,0 +1,143 @@
+create termb,pretermb,termc,pretermc  //separate bag1 and chain terminal segments
+create nodecom  //first node of branching structure
+create nodeb[1], myelinb[1]
+create nodec[1], myelinc[1]
+
+objref myllist,nodelist,pretermlist,termlist
+myllist=new SectionList()
+nodelist=new SectionList()
+pretermlist=new SectionList()
+termlist=new SectionList()
+
+NODESB=3
+NODEC=2
+
+proc topol() {local i
+	nnodesb = $1
+	nnodesc=$2
+	create nodeb[nnodesb], myelinb[nnodesb]
+	create nodec[nnodesc], myelinc[nnodesc]
+	create termb,pretermb,termc,pretermc
+	access nodecom
+	nodecom nodelist.append()
+	
+	connect myelinb[0](0),nodecom(1)
+	connect myelinc[0](0),nodecom(1)
+	
+	for i=0, nnodesb-2 {
+		connect nodeb[i](0), myelinb[i](1)
+		connect myelinb[i+1](0), nodeb[i](1)
+		myelinb[i]  myllist.append()
+		nodeb[i]  nodelist.append()
+	}
+		connect nodeb[nnodesb-1](0),myelinb[nnodesb-1](1)
+		connect pretermb(0),nodeb[nnodesb-1](1)
+		connect termb(0),pretermb(1)
+		
+		myelinb[nnodesb-1] myllist.append()
+		nodeb[nnodesb-1] nodelist.append()
+		pretermb pretermlist.append()
+		termb termlist.append()
+		
+	for i=0, nnodesc-2 {
+		connect nodec[i](0), myelinc[i](1)
+		connect myelinc[i+1](0), nodec[i](1)
+		myelinc[i]  myllist.append()
+		nodec[i]  nodelist.append()
+	}
+		connect nodec[nnodesc-1](0),myelinc[nnodesc-1](1)
+		connect pretermc(0),nodec[nnodesc-1](1)
+		connect termc(0),pretermc(1)
+		
+		myelinc[nnodesc-1] myllist.append()
+		nodec[nnodesc-1] nodelist.append()
+		pretermc pretermlist.append()
+		termc termlist.append()
+
+
+}
+
+
+proc size_and_insertg(){
+
+nodediam=$1
+nodeL=$2
+myldiam=$3
+mylL=$4
+pretermdiam=$5
+pretermL=$6
+termdiam=$7
+termL=$8
+RA=$9
+
+forall {insert pas Ra=RA e_pas=-80}
+v_init=-80
+
+forsec nodelist{insert naxs insert km}
+forsec nodelist{L=nodeL diam=nodediam g_pas=0.0001}
+
+forsec myllist{insert kv1_gp insert Kv3}
+forsec myllist{L=mylL nseg=20 g_pas=2e-6 cm=0.005 diam=myldiam}
+
+forsec pretermlist{nseg=5 diam=pretermdiam L=pretermL g_pas=0.0001}
+forsec pretermlist{insert naxs insert km insert kv1_gp insert mAHP}
+
+forsec termlist{nseg=5 diam=termdiam L=pretermL g_pas=0.0001}
+forsec termlist{insert naxs insert km insert kv1_gp insert Kv3 insert mAHP}
+
+}
+
+proc set_term(){
+forsec termlist{
+gbar_naxs=$1
+gbar_km=$2
+gbar_kv1_gp=$3
+gbar_Kv3=$4
+taur_mAHP=$5
+gkcamax_mAHP=$6
+depth_mAHP=$7
+gcamax_mAHP=$8
+}
+}
+
+proc set_preterm(){
+forsec pretermlist{
+gbar_naxs=$1
+gbar_km=$2
+gbar_kv1_gp=$3
+taur_mAHP=$4
+gkcamax_mAHP=$5
+depth_mAHP=$6
+gcamax_mAHP=$7
+}
+}
+
+proc set_node(){
+forsec nodelist{gbar_naxs=$1
+gbar_km=$2
+}
+}
+
+proc set_paranode(){
+forsec myllist{
+gbar_kv1_gp=0 gbar_kv1_gp(0:0.05)=$1:$1 gbar_kv1_gp(0.95:1)=$1:$1
+gbar_Kv3=0 gbar_Kv3(0:0.05)=$2:$2 gbar_Kv3(0.95:1)=$2:$2
+}
+}
+
+celsius=37
+
+//one possible set of params
+
+//topol(5,4)
+//size_and_insertg(3,3,5,500,1,20,3,100,100)
+//set_paranode(0.01,0.01)
+//set_node(2500,0.005)
+//set_preterm(400,0.005,0.01,80,5e-3,5,5e-5)
+//set_term(400,0.005,0.01,0.01,80,5e-3,5,5e-5)
+
+
+//to add an IClamp to the distal end of each terminal
+//     objref stimb,stimc
+//     termb{stimb=new IClamp(1)
+//     termc{stimc=new IClamp(1)

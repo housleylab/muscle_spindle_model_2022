@@ -1,0 +1,65 @@
+term {
+diam=3
+L=100
+a_MRCHas=0.008
+b_MRCHas=23
+c_MRCHas=-8
+Lhalf_MRCHas=0.45
+Lslp_MRCHas=0.1
+gbar_MRCHas=0.002
+}
+
+
+forsec nodelist{insert naxs insert nav17 gbar_nav17=500 insert km}
+
+proc set_node(){
+forsec nodelist{gbar_naxs=$1
+gbar_nav17=$2
+gbar_km=$3
+}
+}
+
+set_node(2500,800,0.005)
+
+forsec myllist{insert kv1_gp insert Kv3 insert nav1p8}
+
+proc set_paranode(){
+forsec myllist{
+gbar_kv1_gp=0 gbar_kv1_gp(0:0.05)=$1:$1 gbar_kv1_gp(0.95:1)=$1:$1
+gbar_Kv3=0 gbar_Kv3(0:0.05)=$2:$2 gbar_Kv3(0.95:1)=$2:$2
+gbar_nav1p8=0 gbar_nav1p8(0:0.05)=$3:$3 gbar_nav1p8(0.95:1)=$3:$3
+}
+}
+
+set_paranode(0.01,0.01,0.005)
+
+term{
+insert naxs gbar_naxs=200
+insert nav17 gbar_nav17=200
+insert nav1p8 gbar_nav1p8=0.001
+insert nas gbar_nas=200
+insert km gbar_km=0.004
+insert Kv3 gbar_Kv3=0.008
+insert kv1_gp gbar_kv1_gp=0.008
+insert mAHP taur_mAHP=80 gkcamax_mAHP=0.0005 depth_mAHP=5 gcamax_mAHP=5e-5
+}
+
+preterm{
+L=20
+diam=1
+g_pas=0.0002
+insert naxs gbar_nax=200
+insert nav17 gbar_nav17=200
+insert nas gbar_na=200
+insert km gbar_km=0.004
+insert kv1_gp gbar_kv1_gp=0.008
+insert mAHP taur_mAHP=80 gkcamax_mAHP=0.0005 depth_mAHP=5 gcamax_mAHP=5e-5
+}
+
+
+forall {e_pas=-80}
+mvhalfca_mAHP=-20
+forall{ek=-90}
+
+xopen("termHaskm_node_axon.ses")
+xopen("plot_rate.hoc")
